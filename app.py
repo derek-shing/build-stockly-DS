@@ -68,8 +68,11 @@ def generate_target(df):
 
 
 @APP.route('/')
+@APP.route('/api',methods=['POST'])
 def hello_world():
     input ="AAPL"
+    if request.method == 'POST':
+        input = request.values['ticker']
     market_df = generate_df(input)
     market_df = market_df.dropna()
 
