@@ -5,6 +5,7 @@ import json
 import pickle
 from sklearn.preprocessing import StandardScaler
 import os
+import requests
 
 
 
@@ -63,6 +64,8 @@ def generate_target(df):
   df2['percentage_change']=(df2['next_10day_close']-df2['4. close'])/df2['4. close']
   df2['signal']=df2['percentage_change'].apply(signal_class)
   return df2
+
+
 
 @APP.route('/')
 def hello_world():
