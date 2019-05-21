@@ -66,7 +66,7 @@ def generate_target(df):
 
 @APP.route('/')
 def hello_world():
-    input ="FB"
+    input ="ABEV"
     market_df = generate_df(input)
     X = market_df[['5. volume', 'MACD', 'AROONOSC',
                    'MACD_Hist', 'MACD_Signal', 'DX', 'SlowD', 'SlowK']]
@@ -75,7 +75,7 @@ def hello_world():
     X = sc.fit_transform(X)
     y_prebro = model.predict_proba(X[0])
     print(y_prebro)
-    dict1 = {'TA': {'sell':0.5,'hold':0.25,'buy':0.25}, 'Sentiment':{'sell':0.5,'hold':0.25,'buy':0.25}}
+    dict1 = {'TA': {'sell':y_prebro[0],'hold':y_prebro[1],'buy':y_prebro[2]}, 'Sentiment':{'sell':0.5,'hold':0.25,'buy':0.25}}
     json1 = json.dumps(dict1)
     response=json1
     print(response)
