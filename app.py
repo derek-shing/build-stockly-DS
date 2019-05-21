@@ -71,7 +71,7 @@ def hello_world():
     #market_df = market_df.dropna()
 
     #X = market_df[['5. volume', 'MACD', 'AROONOSC',
-                   'MACD_Hist', 'MACD_Signal', 'DX', 'SlowD', 'SlowK']]
+    #               'MACD_Hist', 'MACD_Signal', 'DX', 'SlowD', 'SlowK']]
     #print(X[0])
     #sc = StandardScaler()
     #X = sc.fit_transform(X)
