@@ -66,16 +66,17 @@ def generate_target(df):
 
 @APP.route('/')
 def hello_world():
-    input ="ABEV"
+    input ="MU"
     market_df = generate_df(input)
+    market_df = market_df.dropna()
     X = market_df[['5. volume', 'MACD', 'AROONOSC',
                    'MACD_Hist', 'MACD_Signal', 'DX', 'SlowD', 'SlowK']]
-    print(X[0])
+    #print(X[0])
     sc = StandardScaler()
     X = sc.fit_transform(X)
-    y_prebro = model.predict_proba(X[0])
+    y_prebro = model.predict_proba(X[0].reshape(1, -1))
     print(y_prebro)
-    dict1 = {'TA': {'sell':y_prebro[0],'hold':y_prebro[1],'buy':y_prebro[2]}, 'Sentiment':{'sell':0.5,'hold':0.25,'buy':0.25}}
+    dict1 = {'TA': {'sell':y_prebro[0][0],'hold':y_prebro[0][1],'buy':y_prebro[0][2]}, 'Sentiment':{'sell':0.5,'hold':0.25,'buy':0.25}}
     json1 = json.dumps(dict1)
     response=json1
     print(response)
