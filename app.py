@@ -20,7 +20,7 @@ def generate_df(ticker):
     response1 = requests.get(macd)
     df_macd = pd.DataFrame.from_dict(response1.json()['Technical Analysis: MACD']).T
 
-    stoch = 'https://www.alphavantage.co/query?function=STOCH&symbol=' + ticker + '&interval=daily&apikey=NXAA2P2XI1GQSYPG'
+    stoch = 'https://www.alphavantage.co/query?function=STOCH&symbol=' + ticker + '&interval=daily&apikey=PLHD2X5ETW6R4GF1'
     response2 = requests.get(stoch)
     df_stoch = pd.DataFrame.from_dict(response2.json()['Technical Analysis: STOCH']).T
 
@@ -28,15 +28,15 @@ def generate_df(ticker):
     # response3 = requests.get(rsi)
     # df_rsi = pd.DataFrame.from_dict(response3.json()['Technical Analysis: RSI']).T
 
-    aroon = 'https://www.alphavantage.co/query?function=AROONOSC&symbol=' + ticker + '&interval=daily&time_period=10&apikey=NXAA2P2XI1GQSYPG'
+    aroon = 'https://www.alphavantage.co/query?function=AROONOSC&symbol=' + ticker + '&interval=daily&time_period=10&apikey=SBYDUUQMNB6L5GXN'
     response4 = requests.get(aroon)
     df_aroon = pd.DataFrame.from_dict(response4.json()['Technical Analysis: AROONOSC']).T
 
-    dx = 'https://www.alphavantage.co/query?function=DX&symbol=' + ticker + '&interval=daily&time_period=10&apikey=NXAA2P2XI1GQSYPG'
+    dx = 'https://www.alphavantage.co/query?function=DX&symbol=' + ticker + '&interval=daily&time_period=10&apikey=PKRRAV3RHXK8B9GL'
     response5 = requests.get(dx)
     df_dx = pd.DataFrame.from_dict(response5.json()['Technical Analysis: DX']).T
 
-    url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + ticker + '&interval=5min&outputsize=full&apikey=NXAA2P2XI1GQSYPG'
+    url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + ticker + '&interval=5min&outputsize=full&apikey=08VAMYYFT8BQO48Q'
     response6 = requests.get(url)
     df = pd.DataFrame.from_dict(response6.json()['Time Series (Daily)']).T
 
