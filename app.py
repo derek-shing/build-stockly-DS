@@ -18,13 +18,13 @@ model = pickle.load( open( "model.p", "rb" ) )
 
 
 def generate_df(ticker):
-    macd = 'https://www.alphavantage.co/query?function=MACD&symbol=' + ticker + '&interval=daily&series_type=open&apikey=NXAA2P2XI1GQSYPG'
+    macd = 'https://www.alphavantage.co/query?function=MACD&symbol=' + ticker + '&interval=daily&series_type=open&apikey=SXG08DL4S2EW8SKC'
     response1 = requests.get(macd)
     if "Note" in response1.json().keys():
         return (response1.json()["Note"])
     df_macd = pd.DataFrame.from_dict(response1.json()['Technical Analysis: MACD']).T
 
-    stoch = 'https://www.alphavantage.co/query?function=STOCH&symbol=' + ticker + '&interval=daily&apikey=PLHD2X5ETW6R4GF1'
+    stoch = 'https://www.alphavantage.co/query?function=STOCH&symbol=' + ticker + '&interval=daily&apikey=SXG08DL4S2EW8SKC'
     response2 = requests.get(stoch)
     if "Note" in response2.json().keys():
         return (response2.json()["Note"])
@@ -34,19 +34,19 @@ def generate_df(ticker):
     # response3 = requests.get(rsi)
     # df_rsi = pd.DataFrame.from_dict(response3.json()['Technical Analysis: RSI']).T
 
-    aroon = 'https://www.alphavantage.co/query?function=AROONOSC&symbol=' + ticker + '&interval=daily&time_period=10&apikey=SBYDUUQMNB6L5GXN'
+    aroon = 'https://www.alphavantage.co/query?function=AROONOSC&symbol=' + ticker + '&interval=daily&time_period=10&apikey=SXG08DL4S2EW8SKC'
     response4 = requests.get(aroon)
     if "Note" in response4.json().keys():
         return (response4.json()["Note"])
     df_aroon = pd.DataFrame.from_dict(response4.json()['Technical Analysis: AROONOSC']).T
 
-    dx = 'https://www.alphavantage.co/query?function=DX&symbol=' + ticker + '&interval=daily&time_period=10&apikey=PKRRAV3RHXK8B9GL'
+    dx = 'https://www.alphavantage.co/query?function=DX&symbol=' + ticker + '&interval=daily&time_period=10&apikey=SXG08DL4S2EW8SKC'
     response5 = requests.get(dx)
     if "Note" in response5.json().keys():
         return (response5.json()["Note"])
     df_dx = pd.DataFrame.from_dict(response5.json()['Technical Analysis: DX']).T
 
-    url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + ticker + '&interval=5min&outputsize=full&apikey=08VAMYYFT8BQO48Q'
+    url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + ticker + '&interval=5min&outputsize=full&apikey=SXG08DL4S2EW8SKC'
     response6 = requests.get(url)
     if "Note" in response6.json().keys():
         return (response6.json()["Note"])
