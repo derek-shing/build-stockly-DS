@@ -40,10 +40,18 @@ def get_news(ticker):
     url = "http://finance.yahoo.com/rss/headline?s="
     feed = requests.get(url + ticker)
     soup = BeautifulSoup(feed.text)
-    news = soup.find_all('description')[1]
+    news = soup.find_all('description')
+    text = []
+    scores =[]
+    for new in news:
+        text.append(new.text)
+    for new in text[1:10]
+        score = sample_analyze_sentiment(new)
+        scores.append(score)
 
-    score = sample_analyze_sentiment(news.text)
-    return score, news.text
+    df = pd.DataFrame(text[1:10])
+    df['score']=scores
+    return df
 
 
 
@@ -138,11 +146,11 @@ def hello_world():
     #y_prebro = model.predict_proba(test)
     #print(y_prebro)
 
-    s,t=get_news(input)
+    #s,t=get_news(input)
 
     dict1 = {'TA': {'sell':y_prebro[0][0],'hold':y_prebro[0][1],'buy':y_prebro[0][2]}, 'Sentiment':{'sell':0.5,'hold':0.25,'buy':0.25}}
-    dict1 = {'TA': {'sell': y_prebro[0][0], 'hold': y_prebro[0][1], 'buy': y_prebro[0][2]},
-             'Sentiment': {'score':s,'news':t}}
+    #dict1 = {'TA': {'sell': y_prebro[0][0], 'hold': y_prebro[0][1], 'buy': y_prebro[0][2]},
+    #         'Sentiment': {'score':s,'news':t}}
     #dict1 = {'TA': {'sell': 0.5, 'hold': 0.25, 'buy': 0.25},'Sentiment': {'sell': 0.5, 'hold': 0.25, 'buy': 0.25}}
     json1 = json.dumps(dict1)
     response=json1
