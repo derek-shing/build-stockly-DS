@@ -45,7 +45,7 @@ def get_news(ticker):
     scores =[]
     for new in news:
         text.append(new.text)
-    for new in text[1:10]
+    for new in text[1:10]:
         score = sample_analyze_sentiment(new)
         scores.append(score)
 
