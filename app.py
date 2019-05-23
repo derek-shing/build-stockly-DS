@@ -6,6 +6,34 @@ import pickle
 from sklearn.preprocessing import StandardScaler
 import os
 import requests
+from google.cloud import language_v1
+from google.cloud.language_v1 import enums
+import six
+from os import getenv
+from dotenv import load_dotenv
+
+load_dotenv()
+
+
+
+
+def sample_analyze_sentiment(content):
+
+    client = language_v1.LanguageServiceClient()
+
+    #content = 'Your text to analyze, e.g. Hello, world!'
+
+    if isinstance(content, six.binary_type):
+        content = content.decode('utf-8')
+
+    type_ = enums.Document.Type.PLAIN_TEXT
+    document = {'type': type_, 'content': content}
+
+    response = client.analyze_sentiment(document)
+    sentiment = response.document_sentiment
+    #print('Score: {}'.format(sentiment.score))
+    #print('Magnitude: {}'.format(sentiment.magnitude))
+    return sentiment.score
 
 
 
@@ -98,11 +126,33 @@ def hello_world():
     #test = np.array([[ 0.84330129, -0.87267448, -1.55021623, -1.14815012, -0.54096114,1.74642336, -1.14298853, -1.59289229]])
     y_prebro = model.predict_proba(X[0].reshape(1, -1))
     #y_prebro = model.predict_proba(test)
-    print(y_prebro)
+    #print(y_prebro)
+
+
+
     dict1 = {'TA': {'sell':y_prebro[0][0],'hold':y_prebro[0][1],'buy':y_prebro[0][2]}, 'Sentiment':{'sell':0.5,'hold':0.25,'buy':0.25}}
     #dict1 = {'TA': {'sell': 0.5, 'hold': 0.25, 'buy': 0.25},'Sentiment': {'sell': 0.5, 'hold': 0.25, 'buy': 0.25}}
     json1 = json.dumps(dict1)
     response=json1
+    print(response)
+
+
+    return response
+
+
+@APP.route('/sentiment')
+@APP.route('/sentiment',methods=['POST'])
+def sentiment():
+    input ="AAPL"
+    if request.method == 'POST':
+        input = request.values['ticker']
+    market_df = generate_df(input)
+    if type(market_df)==str:
+        return market_df
+
+
+    #json1 = json.dumps(dict1)
+    response=sample_analyze_sentiment("The bad news seems to keep on coming for Tesla Inc., and one expert says this is the year the electric-car company “comes undone” — and maybe gets bought by Apple Inc.")
     print(response)
 
 

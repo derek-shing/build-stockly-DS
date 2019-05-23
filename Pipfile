@@ -12,6 +12,10 @@ gunicorn = "*"
 flask = "*"
 sklearn = "*"
 requests = "*"
+google-cloud = "*"
+google = "*"
+google-cloud-language = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3.7"
