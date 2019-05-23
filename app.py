@@ -152,8 +152,10 @@ def sentiment():
 
 
     #json1 = json.dumps(dict1)
-    response=sample_analyze_sentiment("The bad news seems to keep on coming for Tesla Inc., and one expert says this is the year the electric-car company “comes undone” — and maybe gets bought by Apple Inc.")
-    str(response)
+    score=sample_analyze_sentiment("The bad news seems to keep on coming for Tesla Inc., and one expert says this is the year the electric-car company “comes undone” — and maybe gets bought by Apple Inc.")
+    json1 = json.dumps({"sentiment":score})
+
+    response=json1
 
 
     return response
