@@ -10,6 +10,7 @@ from google.cloud import language_v1
 from google.cloud.language_v1 import enums
 import six
 from os import getenv
+from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -34,6 +35,15 @@ def sample_analyze_sentiment(content):
     #print('Score: {}'.format(sentiment.score))
     #print('Magnitude: {}'.format(sentiment.magnitude))
     return sentiment.score
+
+def get_news(ticker):
+    url = "http://finance.yahoo.com/rss/headline?s="
+    feed = requests.get(url + ticker)
+    soup = BeautifulSoup(feed.text)
+    news = soup.find_all('description')[1]
+
+    score = sample_analyze_sentiment(news.text)
+    return score, news.text
 
 
 
@@ -128,9 +138,11 @@ def hello_world():
     #y_prebro = model.predict_proba(test)
     #print(y_prebro)
 
-
+    s,t=get_news(input)
 
     dict1 = {'TA': {'sell':y_prebro[0][0],'hold':y_prebro[0][1],'buy':y_prebro[0][2]}, 'Sentiment':{'sell':0.5,'hold':0.25,'buy':0.25}}
+    dict1 = {'TA': {'sell': y_prebro[0][0], 'hold': y_prebro[0][1], 'buy': y_prebro[0][2]},
+             'Sentiment': {'score':s,'news':t}}
     #dict1 = {'TA': {'sell': 0.5, 'hold': 0.25, 'buy': 0.25},'Sentiment': {'sell': 0.5, 'hold': 0.25, 'buy': 0.25}}
     json1 = json.dumps(dict1)
     response=json1
