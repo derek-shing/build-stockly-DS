@@ -155,7 +155,7 @@ def recommendation():
     print(twitter_sentiment)
 
 
-    dict1 = {'TA': {'sell':y_prebro[0][0],'hold':y_prebro[0][1],'buy':y_prebro[0][2]}, 'Sentiment':{'sell':twitter_sentiment['sell'],'hold':twitter_sentiment['hold'],'buy':twitter_sentiment['buy']}}
+    dict1 = {'TA': {'sell':y_prebro[0][0],'hold':y_prebro[0][1],'buy':y_prebro[0][2]}, 'Sentiment':{'sell':twitter_sentiment['Sell'],'hold':twitter_sentiment['Hold'],'buy':twitter_sentiment['Buy']}}
 
     json1 = json.dumps(dict1)
     response=json1
