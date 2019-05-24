@@ -62,10 +62,10 @@ APP = Flask(__name__)
 model = pickle.load( open( "model.p", "rb" ) )
 
 
-sentiment_model = TwitterSentiment("TSLA")
+#sentiment_model = TwitterSentiment("TSLA")
 
-twitter_sentiment = sentiment_model.output_twitter()
-print(twitter_sentiment)
+#twitter_sentiment = sentiment_model.output_twitter()
+#print(twitter_sentiment)
 
 def generate_df(ticker):
     macd = 'https://www.alphavantage.co/query?function=MACD&symbol=' + ticker + '&interval=daily&series_type=open&apikey=SXG08DL4S2EW8SKC'
@@ -149,13 +149,13 @@ def recommendation():
 
     y_prebro = model.predict_proba(X[0].reshape(1, -1))
 
-    #sentiment_model = TwitterSentiment(input)
+    sentiment_model = TwitterSentiment(input)
 
-    #twitter_sentiment = sentiment_model.output_twitter()
-    #print(twitter_sentiment)
+    twitter_sentiment = sentiment_model.output_twitter()
+    print(twitter_sentiment)
 
 
-    dict1 = {'TA': {'sell':y_prebro[0][0],'hold':y_prebro[0][1],'buy':y_prebro[0][2]}, 'Sentiment':{'sell':0.5,'hold':0.25,'buy':0.25}}
+    dict1 = {'TA': {'sell':y_prebro[0][0],'hold':y_prebro[0][1],'buy':y_prebro[0][2]}, 'Sentiment':{'sell':twitter_sentiment['sell'],'hold':twitter_sentiment['hold'],'buy':twitter_sentiment['buy']}}
 
     json1 = json.dumps(dict1)
     response=json1
