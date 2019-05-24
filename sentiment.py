@@ -82,5 +82,7 @@ class TwitterSentiment():
         keys = ['Sell', 'Hold', 'Buy']
 
         twitter_sentiment_analysis = dict(zip(keys, values))
+        factor = 1.0 / sum(twitter_sentiment_analysis.itervalues())
+        normalised_twitter_sentiment_analysis = {k: v * factor for k, v in twitter_sentiment_analysis.iteritems()}
 
-        return twitter_sentiment_analysis
+        return normalised_twitter_sentiment_analysis
