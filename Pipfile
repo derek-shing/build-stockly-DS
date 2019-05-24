@@ -16,6 +16,8 @@ google-cloud = "*"
 google = "*"
 google-cloud-language = "*"
 python-dotenv = "*"
+tweepy = "*"
+nltk = "*"
 
 [requires]
 python_version = "3.7"

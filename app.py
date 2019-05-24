@@ -12,6 +12,7 @@ import six
 from os import getenv
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
+from sentiment import TwitterSentiment
 
 load_dotenv()
 
@@ -61,7 +62,10 @@ APP = Flask(__name__)
 model = pickle.load( open( "model.p", "rb" ) )
 
 
+sentiment_model = TwitterSentiment("TSLA")
 
+twitter_sentiment = sentiment_model.output_twitter()
+print(twitter_sentiment)
 
 def generate_df(ticker):
     macd = 'https://www.alphavantage.co/query?function=MACD&symbol=' + ticker + '&interval=daily&series_type=open&apikey=SXG08DL4S2EW8SKC'
@@ -127,31 +131,32 @@ def generate_target(df):
 
 @APP.route('/')
 @APP.route('/api',methods=['POST'])
-def hello_world():
+def recommendation():
     input ="AAPL"
     if request.method == 'POST':
         input = request.values['ticker']
     market_df = generate_df(input)
+
+
     if type(market_df)==str:
         return market_df
 
     market_df = market_df.dropna()
 
     X = market_df[['5. volume', 'MACD', 'AROONOSC','MACD_Hist', 'MACD_Signal', 'DX', 'SlowD', 'SlowK']]
-    #print(X[0])
     sc = StandardScaler()
     X = sc.fit_transform(X)
-    #test = np.array([[ 0.84330129, -0.87267448, -1.55021623, -1.14815012, -0.54096114,1.74642336, -1.14298853, -1.59289229]])
-    y_prebro = model.predict_proba(X[0].reshape(1, -1))
-    #y_prebro = model.predict_proba(test)
-    #print(y_prebro)
 
-    #s,t=get_news(input)
+    y_prebro = model.predict_proba(X[0].reshape(1, -1))
+
+    #sentiment_model = TwitterSentiment(input)
+
+    #twitter_sentiment = sentiment_model.output_twitter()
+    #print(twitter_sentiment)
+
 
     dict1 = {'TA': {'sell':y_prebro[0][0],'hold':y_prebro[0][1],'buy':y_prebro[0][2]}, 'Sentiment':{'sell':0.5,'hold':0.25,'buy':0.25}}
-    #dict1 = {'TA': {'sell': y_prebro[0][0], 'hold': y_prebro[0][1], 'buy': y_prebro[0][2]},
-    #         'Sentiment': {'score':s,'news':t}}
-    #dict1 = {'TA': {'sell': 0.5, 'hold': 0.25, 'buy': 0.25},'Sentiment': {'sell': 0.5, 'hold': 0.25, 'buy': 0.25}}
+
     json1 = json.dumps(dict1)
     response=json1
     print(response)
