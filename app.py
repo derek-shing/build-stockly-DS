@@ -12,7 +12,7 @@ import six
 from os import getenv
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
-from sentiment import TwitterSentiment
+#from sentiment import TwitterSentiment
 
 load_dotenv()
 
@@ -149,13 +149,13 @@ def recommendation():
 
     y_prebro = model.predict_proba(X[0].reshape(1, -1))
 
-    sentiment_model = TwitterSentiment(input)
+    #sentiment_model = TwitterSentiment(input)
 
-    twitter_sentiment = sentiment_model.output_twitter()
-    print(twitter_sentiment)
+    #twitter_sentiment = sentiment_model.output_twitter()
+   # print(twitter_sentiment)
 
 
-    dict1 = {'TA': {'sell':y_prebro[0][0],'hold':y_prebro[0][1],'buy':y_prebro[0][2]}, 'Sentiment':{'sell':twitter_sentiment['Sell'],'hold':twitter_sentiment['Hold'],'buy':twitter_sentiment['Buy']}}
+    dict1 = {'TA': {'sell':y_prebro[0][0],'hold':y_prebro[0][1],'buy':y_prebro[0][2]}, 'Sentiment':{'sell':0.25,'hold':0.5,'buy':twitter_sentiment0.25}}
 
     json1 = json.dumps(dict1)
     response=json1
